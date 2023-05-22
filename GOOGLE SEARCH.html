@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goog Search</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #F2F2F2;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    #search {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
+    }
+    
+    #search-btn {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    
+    #articles {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    #articles li {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    
+    #back-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+    }
+    
+    @media (max-width: 768px) {
+      #back-btn {
+        top: 10px;
+        right: 10px;
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Goog Search</h1>
+
+  <div>
+    <input type="text" id="search" placeholder="Search">
+    <button id="search-btn" onclick="searchArticles()">Search</button>
+  </div>
+  
+  <ul id="articles"></ul>
+
+  <button id="back-btn" onclick="goBack()"> <a href = "NAV BAR.html">Back</a></button>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function searchArticles() {
+      var searchQuery = document.getElementById('search').value;
+      var articles = [
+        { title: 'Weather', content: 'https://www.google.com/search?q=weather&sxsrf=APwXEdc6uKb6h4ncktQVaETBVN4AkuIpJw%3A1684695180360&ei=jGhqZNnaFbnD4-EPmP6pmAQ&ved=0ahUKEwjZ0J7Oiof_AhW54TgGHRh_CkMQ4dUDCA8&uact=5&oq=weather&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIECCMQJzIHCCMQigUQJzIICAAQigUQkQIyCAgAEIoFEJECMggIABCKBRCRAjILCAAQgAQQsQMQgwEyCwgAEIAEELEDEIMBMg4IABCABBCxAxCDARDJAzIOCAAQgAQQsQMQgwEQkgMyCAgAEIoFEJIDOg0IABCKBRCxAxCDARBDOgsILhCABBCxAxCDAToLCAAQigUQsQMQgwE6BQgAEIAEOgoILhCKBRDUAhBDOgcILhCKBRBDOhAIABCKBRCxAxCDARDJAxBDOg4IABCKBRCxAxCDARCSAzoHCAAQigUQQ0oECEEYAFAAWKwGYMkHaABwAXgAgAGKAYgBxQaSAQMxLjaYAQCgAQHAAQE&sclient=gws-wiz-serp#' },
+        { title: 'Sports', content: 'https://sports.yahoo.com/nba-playoffs-nuggets-push-lakers-to-the-brink-with-3-0-western-conference-finals-lead-030322372.html' },
+        { title: 'Entertainment', content: 'https://en.wikipedia.org/wiki/Entertainment' }
+        // Add more articles here
+      ];
+      var searchResults = [];
+
+      // Perform search
+      for (var i = 0; i < articles.length; i++) {
+        if (articles[i].title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            articles[i].content.toLowerCase().includes(searchQuery.toLowerCase())) {
+          searchResults.push(articles[i]);
+        }
+      }
+
+      displayArticles(searchResults);
+    }
+
+    function displayArticles(articles) {
+      var articlesList = document.getElementById('articles');
+      articlesList.innerHTML = '';
+
+      if (articles.length === 0) {
+        var noResults = document.createElement('li');
+        noResults.textContent = 'No articles found.';
+        articlesList.appendChild(noResults);
+      } else {
+        for (var i = 0; i < articles.length; i++) {
+          var article = document.createElement('li');
+          var title = document.createElement('h3');
+          title.textContent = articles[i].title;
+          article.appendChild(title);
+          
+          var link = document.createElement('a');
+          link.href = articles[i].content;
+          link.textContent = articles[i].content;
+          article.appendChild(link);
+          
+          articlesList.appendChild(article);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
